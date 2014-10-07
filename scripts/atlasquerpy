@@ -7,8 +7,8 @@ import logging
 
 import nibabel as nib
 
-from macuto.atlas.atlas_group import AtlasGroup
-from macuto.scriptutils import whoami
+from atlas.atlas_group import AtlasGroup
+from scriptutils import whoami
 
 #logging config
 logging.basicConfig(level=logging.DEBUG, filename='atlasquerpy.log',
