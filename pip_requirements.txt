@@ -1,0 +1,4 @@
+#pip install the rest
+pyyaml==3.11
+nipy==0.3.0
+git+https://www.github.com/neurita/boyle.git
