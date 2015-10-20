@@ -16,12 +16,8 @@ import sys
 from setuptools import Command, setup, find_packages
 from setuptools.command.test import test as TestCommand
 from pip.req import parse_requirements
-from install_deps import get_requirements
 
 script_path = 'scripts'
-
-#install_reqs = parse_requirements('requirements.txt')
-req_files = ['requirements.txt', 'pip_requirements.txt']
 
 LICENSE = 'new BSD'
 
@@ -50,7 +46,7 @@ setup_dict = dict(
 
     packages=find_packages(),
 
-    install_requires=get_requirements(*req_files),
+    install_requires=['numpy', 'nibabel', 'nipy', 'pyyaml'],
 
     scripts=[op.join(script_path, 'atlasquerpy')],
 
