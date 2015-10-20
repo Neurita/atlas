@@ -32,9 +32,8 @@ def voxcoord_to_mm(cm, i, j, k):
     '''
     try:
         mm = cm([i, j, k])
-    except:
-        log.error('Error on converting coordinates.')
-        raise
+    except Exception as exc:
+        raise Exception('Error on converting coordinates.') from exc
 
     return mm
 
@@ -53,9 +52,8 @@ def mm_to_voxcoord(cm, x, y, z):
     '''
     try:
         vox = cm.inverse()([x, y, z])
-    except:
-        log.error('Error on converting coordinates')
-        raise
+    except Exception as exc:
+        raise Exception('Error on converting coordinates') from exc
 
     return vox
 

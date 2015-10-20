@@ -1,11 +1,8 @@
 
 import os
-import logging
 import nibabel as nib
 from .atlas import StatsAtlas, LabelAtlas
 from .strings import search_list
-
-log = logging.getLogger(__name__)
 
 
 class AtlasFiles:
@@ -27,9 +24,9 @@ class AtlasFiles:
             if 'FSLDIR' in os.environ and os.environ['FSLDIR'] != '':
                 self.fsl_dir = os.environ['FSLDIR']
             else:
-                log.error('''Could not obtain $FSLDIR environment
-                             variable value, using a default value:
-                             /usr/share/fsl''')
+                raise IOError('''Could not obtain $FSLDIR environment
+                              variable value, using a default value:
+                              /usr/share/fsl''')
 
         return self.fsl_dir
 
@@ -51,8 +48,8 @@ class AtlasFiles:
             if 'FSLATLASPATH' in os.environ:
                 self.atlas_path = os.environ['FSLATLASPATH']
             else:
-                self.atlas_path = os.path.join(self.get_FSL_dir(), 
-                                               'data', 
+                self.atlas_path = os.path.join(self.get_FSL_dir(),
+                                               'data',
                                                'atlases')
 
         return self.atlas_path
@@ -116,7 +113,7 @@ class AtlasFiles:
 
     def read_xml_atlas(self, atlas_dir, file_name):
         """
-        Process the data inside an Atlas definition XML file and returns the 
+        Process the data inside an Atlas definition XML file and returns the
         corresponding Atlas.
 
         Parameters
@@ -136,10 +133,8 @@ class AtlasFiles:
 
         try:
             dom = minidom.parse(full_path)
-        except IOError:
-            print("Error: can\'t find file or read " + full_path)
-            
-            raise
+        except IOError as ioe:
+            raise IOError("Error: can't find file or read {}.".format(full_path)) from ioe
 
         root = dom.documentElement
 
@@ -232,7 +227,7 @@ class AtlasFiles:
                     if curr_node.nodeType == node.ELEMENT_NODE:
                         curr_node_name = curr_node.nodeName
                         if curr_node_name == 'label':
-                            n = int(self._get_dom_attribute_value(curr_node, 
+                            n = int(self._get_dom_attribute_value(curr_node,
                                                                   'index', '0'))
                             l = str(curr_node.firstChild.data)
                             atlas.add_label(n, l)

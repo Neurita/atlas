@@ -3,10 +3,6 @@ import nibabel as nib
 from nipy.algorithms.kernel_smooth import LinearFilter
 from nipy import load_image
 
-import logging
-
-log = logging.getLogger(__name__)
-
 
 def is_valid_coordinate(img, i, j, k):
     """
@@ -86,7 +82,6 @@ def check_have_same_geometry(fname1, fname2):
     """
     if not have_same_geometry(fname1, fname2):
         err = 'Different shapes:' + fname1 + ' vs. ' + fname2
-        log.error(err)
         raise ArithmeticError(err)
 
 
@@ -98,7 +93,6 @@ def check_have_same_spatial_geometry(fname1, fname2):
     """
     if not have_same_spatial_geometry(fname1, fname2):
         err = 'Different shapes:' + fname1 + ' vs. ' + fname2
-        log.error(err)
         raise ArithmeticError(err)
 
 
@@ -124,7 +118,7 @@ def smooth_volume(nifti_file, smoothmm):
     try:
         img = load_image(nifti_file)
     except Exception as exc:
-        log.error('Error reading file {0}.'.format(nifti_file), exc_info=True)
+        raise Exception('Error reading file {0}.'.format(nifti_file), exc_info=True) from exc
 
     if smoothmm <= 0:
         return img
@@ -155,8 +149,7 @@ def create_mask_file(filepath, outpath, threshold=0):
         save_niigz(outpath, vol, nibf.get_affine(), nibf.get_header())
 
     except Exception as exc:
-        log.exception('Error creating mask from file {0}.'.format(filepath))
-
+        raise Exception('Error creating mask from file {0}.'.format(filepath)) from exc
 
 
 

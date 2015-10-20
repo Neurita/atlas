@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import logging
+
 import numpy as np
 from nipy.io.nifti_ref import nifti2nipy
 
@@ -18,7 +19,7 @@ class Atlas:
     Stores atlases data
     """
 
-    def __init__(self, imgs, summs, name): 
+    def __init__(self, imgs, summs, name):
         """
         Parameters
         ----------
@@ -127,8 +128,8 @@ class StatsAtlas (Atlas):
     """
     Stores statistical atlases data
     """
-    def __init__(self, imgs, summs, name, lower, upper, precision, 
-                 stats_name, units): 
+    def __init__(self, imgs, summs, name, lower, upper, precision,
+                 stats_name, units):
         """
         imgs: list of nib.Nifti1Image
         summs: list of nib.Nifti1Image
@@ -185,7 +186,7 @@ class StatsAtlas (Atlas):
 
         Returns
         -------
-        The total sum of 
+        The total sum of
 
         """
         mask_vol = np.array(mask_img.get_data())
@@ -335,7 +336,7 @@ class StatsAtlas (Atlas):
             if self.stats_name:
                 text += self.stats_name + '='
 
-            if self.units: 
+            if self.units:
                 text += self.units
 
             text += ' ' + label
@@ -350,7 +351,7 @@ class LabelAtlas (Atlas):
     """
     Stores statistical atlases data
     """
-    def __init__(self, imgs, summs, name): 
+    def __init__(self, imgs, summs, name):
         """
         imgs: list of nib.Nifti1Image
         summs: list of nib.Nifti1Image
@@ -391,7 +392,7 @@ class LabelAtlas (Atlas):
 
         Returns
         -------
-        The total sum of 
+        The total sum of
 
         """
         mask_vol = np.array(mask_img.get_data())

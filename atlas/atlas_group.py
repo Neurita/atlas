@@ -1,12 +1,8 @@
 
 import os
-import logging
-from .atlas import Atlas, LabelAtlas, StatsAtlas
+
 from .atlas_files import AtlasFiles
 from .strings import search_list
-
-
-log = logging.getLogger(__name__)
 
 
 class AtlasGroup:
@@ -64,8 +60,8 @@ class AtlasGroup:
         return self.atlases[name] if name in self.atlases else None
 
 
-    def get_compatible_atlases(ref_img):
+    def get_compatible_atlases(self, ref_img):
         """
         """
-        for nom in atlases:
-            atlases[nom].select_compatible_images(ref_img)
+        for nom in self.atlases:
+            self.atlases[nom].select_compatible_images(ref_img)
